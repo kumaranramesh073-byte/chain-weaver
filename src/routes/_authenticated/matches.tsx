@@ -3,7 +3,14 @@ import { useQuery } from "@tanstack/react-query";
 import { ArrowLeftRight } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { Panel, Pill, Empty } from "@/components/ui-bits";
-import { currentUserQuery, profilesQuery, skillsQuery, toMembers, initials } from "@/lib/data";
+import {
+  currentUserQuery,
+  profilesQuery,
+  skillsQuery,
+  goalsQuery,
+  toMembers,
+  initials,
+} from "@/lib/data";
 import { matchSkill } from "@/lib/chains";
 
 export const Route = createFileRoute("/_authenticated/matches")({

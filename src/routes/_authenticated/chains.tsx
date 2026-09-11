@@ -2,7 +2,14 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { AppShell } from "@/components/AppShell";
 import { Panel, Pill, Empty } from "@/components/ui-bits";
-import { currentUserQuery, profilesQuery, skillsQuery, toMembers, initials } from "@/lib/data";
+import {
+  currentUserQuery,
+  profilesQuery,
+  skillsQuery,
+  goalsQuery,
+  toMembers,
+  initials,
+} from "@/lib/data";
 import { findChains, type Chain } from "@/lib/chains";
 
 export const Route = createFileRoute("/_authenticated/chains")({
