@@ -37,6 +37,7 @@ function MatchesPage() {
   const { data: user } = useQuery(currentUserQuery);
   const { data: profiles = [] } = useQuery(profilesQuery);
   const { data: skills = [] } = useQuery(skillsQuery);
+  const { data: goals = [] } = useQuery(goalsQuery);
 
   const members = toMembers(profiles, skills, goals);
   const me = members.find((m) => m.id === user?.id);

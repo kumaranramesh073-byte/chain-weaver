@@ -37,6 +37,7 @@ function ChainsPage() {
   const { data: user } = useQuery(currentUserQuery);
   const { data: profiles = [] } = useQuery(profilesQuery);
   const { data: skills = [] } = useQuery(skillsQuery);
+  const { data: goals = [] } = useQuery(goalsQuery);
 
   const members = toMembers(profiles, skills, goals);
   const chains = findChains(members);
