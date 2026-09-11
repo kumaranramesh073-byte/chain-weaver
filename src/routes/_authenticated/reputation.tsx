@@ -19,6 +19,7 @@ import {
   reviewsQuery,
   skillsQuery,
   projectMembersQuery,
+  goalsQuery,
   toMembers,
   initials,
 } from "@/lib/data";
@@ -51,6 +52,7 @@ function ReputationPage() {
   const { data: reviews = [] } = useQuery(reviewsQuery);
   const { data: skills = [] } = useQuery(skillsQuery);
   const { data: memberships = [] } = useQuery(projectMembersQuery);
+  const { data: goals = [] } = useQuery(goalsQuery);
 
   const aboutMe = reviews.filter((r) => r.subject_id === user?.id);
   const avg = aboutMe.length
