@@ -14,7 +14,236 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      learning_goals: {
+        Row: {
+          created_at: string
+          id: string
+          notes: string
+          priority: number
+          progress: number
+          skill: string
+          status: string
+          target_date: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          notes?: string
+          priority?: number
+          progress?: number
+          skill: string
+          status?: string
+          target_date?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          notes?: string
+          priority?: number
+          progress?: number
+          skill?: string
+          status?: string
+          target_date?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      messages: {
+        Row: {
+          body: string
+          created_at: string
+          id: string
+          read_at: string | null
+          recipient_id: string
+          sender_id: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          id?: string
+          read_at?: string | null
+          recipient_id: string
+          sender_id: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          id?: string
+          read_at?: string | null
+          recipient_id?: string
+          sender_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_color: string
+          bio: string
+          created_at: string
+          display_name: string
+          headline: string
+          id: string
+          location: string
+          trade_hours: number
+          trust_score: number
+          updated_at: string
+        }
+        Insert: {
+          avatar_color?: string
+          bio?: string
+          created_at?: string
+          display_name?: string
+          headline?: string
+          id: string
+          location?: string
+          trade_hours?: number
+          trust_score?: number
+          updated_at?: string
+        }
+        Update: {
+          avatar_color?: string
+          bio?: string
+          created_at?: string
+          display_name?: string
+          headline?: string
+          id?: string
+          location?: string
+          trade_hours?: number
+          trust_score?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      project_members: {
+        Row: {
+          created_at: string
+          id: string
+          project_id: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          project_id: string
+          role?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          project_id?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_members_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      projects: {
+        Row: {
+          created_at: string
+          id: string
+          needed_skills: string[]
+          owner_id: string
+          status: string
+          summary: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          needed_skills?: string[]
+          owner_id: string
+          status?: string
+          summary?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          needed_skills?: string[]
+          owner_id?: string
+          status?: string
+          summary?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      reviews: {
+        Row: {
+          comment: string
+          created_at: string
+          id: string
+          rating: number
+          reviewer_id: string
+          skill: string
+          subject_id: string
+        }
+        Insert: {
+          comment?: string
+          created_at?: string
+          id?: string
+          rating: number
+          reviewer_id: string
+          skill?: string
+          subject_id: string
+        }
+        Update: {
+          comment?: string
+          created_at?: string
+          id?: string
+          rating?: number
+          reviewer_id?: string
+          skill?: string
+          subject_id?: string
+        }
+        Relationships: []
+      }
+      skills: {
+        Row: {
+          category: string
+          created_at: string
+          id: string
+          kind: string
+          name: string
+          proficiency: string
+          user_id: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          id?: string
+          kind: string
+          name: string
+          proficiency?: string
+          user_id: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          id?: string
+          kind?: string
+          name?: string
+          proficiency?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
