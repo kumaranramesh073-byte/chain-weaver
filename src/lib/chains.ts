@@ -17,16 +17,79 @@ export type Chain = {
   links: ChainLink[];
 };
 
-const norm = (s: string) => s.trim().toLowerCase();
+const ALIASES: Record<string, string> = {
+  js: "javascript",
+  ts: "typescript",
+  reactjs: "react",
+  nodejs: "node",
+  py: "python",
+  photoshop: "adobe photoshop",
+  ui: "ui design",
+  ux: "ux design",
+};
+
+const FILLER = new Set([
+  "basic",
+  "basics",
+  "beginner",
+  "intro",
+  "introduction",
+  "advanced",
+  "the",
+  "a",
+  "an",
+  "of",
+  "for",
+  "to",
+  "and",
+  "with",
+  "in",
+  "learn",
+  "learning",
+  "lessons",
+  "course",
+  "skill",
+  "skills",
+]);
+
+/** "React.js  Basics" -> ["react"] */
+function tokens(raw: string): string[] {
+  const cleaned = (ALIASES[raw.trim().toLowerCase().replace(/[^a-z0-9]/g, "")] ?? raw)
+    .toLowerCase()
+    .replace(/[^a-z0-9+#\s]/g, " ");
+
+  return cleaned
+    .split(/\s+/)
+    .map((w) => ALIASES[w] ?? w)
+    .flatMap((w) => w.split(/\s+/))
+    .map((w) => (w.length > 3 && w.endsWith("s") ? w.slice(0, -1) : w))
+    .filter((w) => w && !FILLER.has(w));
+}
+
+/** True when two free-text skill names mean the same thing. */
+export function sameSkill(a: string, b: string): boolean {
+  const ta = tokens(a);
+  const tb = tokens(b);
+  if (!ta.length || !tb.length) return false;
+
+  const sa = new Set(ta);
+  const sb = new Set(tb);
+  const shared = [...sa].filter((w) => sb.has(w)).length;
+  if (shared === 0) return false;
+
+  // every word of the shorter name appears in the longer one
+  return shared === Math.min(sa.size, sb.size);
+}
 
 /** Skill that `from` can teach `to`, if any. */
 export function matchSkill(from: Member, to: Member): string | null {
-  const wanted = new Set(to.wants.map(norm).filter(Boolean));
   for (const skill of from.teaches) {
-    if (skill.trim() && wanted.has(norm(skill))) return skill.trim();
+    if (!skill.trim()) continue;
+    if (to.wants.some((want) => want.trim() && sameSkill(skill, want))) return skill.trim();
   }
   return null;
 }
+
 
 function canonicalKey(ids: string[]): string {
   // rotate so the smallest id comes first — same loop = same key
