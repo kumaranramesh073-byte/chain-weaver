@@ -38,7 +38,7 @@ function ChainsPage() {
   const { data: profiles = [] } = useQuery(profilesQuery);
   const { data: skills = [] } = useQuery(skillsQuery);
 
-  const members = toMembers(profiles, skills);
+  const members = toMembers(profiles, skills, goals);
   const chains = findChains(members);
   const mine = chains.filter((c) => c.members.some((m) => m.id === user?.id));
   const others = chains.filter((c) => !c.members.some((m) => m.id === user?.id));

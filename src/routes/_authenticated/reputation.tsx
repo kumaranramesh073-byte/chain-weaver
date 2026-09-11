@@ -60,7 +60,7 @@ function ReputationPage() {
     : 0;
 
   const mySkills = skills.filter((s) => s.user_id === user?.id);
-  const chains = findChains(toMembers(profiles, skills));
+  const chains = findChains(toMembers(profiles, skills, goals));
   const myChains = chains.filter((c) => c.members.some((m) => m.id === user?.id));
   const myProjects = memberships.filter((m) => m.user_id === user?.id);
 
