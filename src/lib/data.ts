@@ -139,14 +139,27 @@ export const reviewsQuery = queryOptions({
 });
 
 /** Build the graph members used by chain + match detection. */
-export function toMembers(profiles: Profile[], skills: Skill[]): Member[] {
-  return profiles.map((p) => ({
-    id: p.id,
-    display_name: p.display_name || "Member",
-    teaches: skills.filter((s) => s.user_id === p.id && s.kind === "teach").map((s) => s.name),
-    wants: skills.filter((s) => s.user_id === p.id && s.kind === "learn").map((s) => s.name),
-  }));
+export function toMembers(
+  profiles: Profile[],
+  skills: Skill[],
+  goals: LearningGoal[] = [],
+): Member[] {
+  return profiles.map((p) => {
+    const wants = [
+      ...skills.filter((s) => s.user_id === p.id && s.kind === "learn").map((s) => s.name),
+      // learning goals count as "wants" too, so chains form from either page
+      ...goals.filter((g) => g.user_id === p.id && g.status !== "done").map((g) => g.skill),
+    ];
+
+    return {
+      id: p.id,
+      display_name: p.display_name || "Member",
+      teaches: skills.filter((s) => s.user_id === p.id && s.kind === "teach").map((s) => s.name),
+      wants: [...new Set(wants.map((w) => w.trim()).filter(Boolean))],
+    };
+  });
 }
+
 
 export function initials(name: string) {
   return (
